@@ -8,18 +8,86 @@ class BilgiTesti extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            backgroundColor: Colors.indigo[700],
-            body: SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: SoruSayfasi(),
-                ),
+        home: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            appBar: AppBar(
+              bottom: TabBar(tabs: [
+              Tab(text: "Fragen"),
+              Tab(text: "Bild"),
+              Tab(text: "Fragen"),
+              ],
+              ),
             ),
+              backgroundColor: Colors.indigo[700],
+              body: SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: TabBarView(
+                      children: [
+                        SoruSayfasi(),Bild(),Extra(),
+                      ],
+                    ),
+                  ),
+              ),
+          ),
         ),
     );
   }
 }
+
+
+class Bild extends StatefulWidget {
+  const Bild({Key? key}) : super(key: key);
+
+  @override
+  _BildState createState() => _BildState();
+}
+
+class _BildState extends State<Bild> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(child: Text('1')),
+          ],
+        ),Row(
+          children: [
+            Expanded(child: Text('2')),
+          ],
+        ),
+      ],
+    );
+  }
+}
+class Extra extends StatefulWidget {
+  const Extra({Key? key}) : super(key: key);
+
+  @override
+  _ExtraState createState() => _ExtraState();
+}
+
+class _ExtraState extends State<Extra> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(child: Text('1')),
+          ],
+        ),Row(
+          children: [
+            Expanded(child: Text('2')),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 
 class SoruSayfasi extends StatefulWidget {
   @override
@@ -100,22 +168,22 @@ List<String> fragen=[
                     child: Padding(
                         padding: EdgeInsets.all(3),
                         child: ElevatedButton(
-
                           onPressed: () {
                             setState(() {
-
-                              if(fragen_Count<=4){
-                                if(fragen_Count==1||fragen_Count==2||fragen_Count==3){
-                                plus=plus+10;
-                                auswahlen.add(richtig);
+                              if (fragen_Count <= 4) {
+                                if (fragen_Count == 1 ||
+                                    fragen_Count == 2 ||
+                                    fragen_Count == 3) {
+                                  plus = plus + 10;
+                                  auswahlen.add(richtig);
+                                  fragen_Count = fragen_Count + 1;
+                                } else {
+                                  plus = plus - 10;
+                                  auswahlen.add(falsch);
+                                  fragen_Count = fragen_Count + 1;
+                                }
                               }
-                              else{
-                                plus=plus-10;
-                                auswahlen.add(falsch);
-                              }
-                              fragen_Count=fragen_Count+1;}
                             });
-
                           },
                           child: Icon(Icons.thumb_down,color: Colors.red,
                             size: 50.0,
@@ -135,15 +203,19 @@ List<String> fragen=[
                                 if(fragen_Count==0||fragen_Count==4){
                                   plus=plus+10;
                                   auswahlen.add(richtig);
+                                  fragen_Count=fragen_Count+1;
                                 }
                                 else {
                                   plus=plus-10;
                                   auswahlen.add(falsch);
+                                  fragen_Count=fragen_Count+1;
                                 }
-                                fragen_Count=fragen_Count+1;}
+
+                              }
 
 
-                            });
+                            }
+                            );
 
                           },
                           child: Icon(Icons.thumb_up, size: 50.0),
