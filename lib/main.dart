@@ -104,7 +104,8 @@ List<String> fragen=[
   'Deutschland hat 10 Bundesland',
   'Die deutsche Nationalmannschaft  hat das letzte Turnier gewonnen',
   'Mercedes ist eine italienische Marke ',
-  'Die Turken leben auch in Koln'
+  'Die Turken leben auch in Koln',
+  ''
 ];
 
 
@@ -170,19 +171,36 @@ List<String> fragen=[
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              if (fragen_Count <= 4) {
-                                if (fragen_Count == 1 ||
-                                    fragen_Count == 2 ||
-                                    fragen_Count == 3) {
-                                  plus = plus + 10;
-                                  auswahlen.add(richtig);
-                                  fragen_Count = fragen_Count + 1;
-                                } else {
+                              if(fragen_Count<=4){
+                              switch (fragen_Count) {
+                                case 0:
                                   plus = plus - 10;
                                   auswahlen.add(falsch);
                                   fragen_Count = fragen_Count + 1;
-                                }
+                                  break;
+                                case 1:
+                                  plus = plus + 10;
+                                  auswahlen.add(richtig);
+                                  fragen_Count = fragen_Count + 1;
+                                  break;
+                                case 2:
+                                  plus = plus + 10;
+                                  auswahlen.add(richtig);
+                                  fragen_Count = fragen_Count + 1;
+                                  break;
+                                case 3:
+                                  plus = plus + 10;
+                                  auswahlen.add(richtig);
+                                  fragen_Count = fragen_Count + 1;
+                                  break;
+                                case 4:
+                                  plus = plus - 10;
+                                  auswahlen.add(falsch); fragen_Count = fragen_Count + 1;
+                                  break;
+
                               }
+                              }
+                              
                             });
                           },
                           child: Icon(Icons.thumb_down,color: Colors.red,
@@ -198,26 +216,37 @@ List<String> fragen=[
 
                           onPressed:  (){
                             setState(() {
-
                               if(fragen_Count<=4){
-                                if(fragen_Count==0||fragen_Count==4){
-                                  plus=plus+10;
-                                  auswahlen.add(richtig);
-                                  fragen_Count=fragen_Count+1;
-                                }
-                                else {
-                                  plus=plus-10;
-                                  auswahlen.add(falsch);
-                                  fragen_Count=fragen_Count+1;
-                                }
+                          switch (fragen_Count) {
+                            case 0:
+                              plus = plus + 10;
+                              auswahlen.add(richtig);
+                              fragen_Count = fragen_Count + 1;
+                              break;
+                              break;
+                            case 1:
+                              plus = plus - 10;
+                              auswahlen.add(falsch);
+                              fragen_Count = fragen_Count + 1;
+                              break;
+                            case 2:
+                              plus = plus - 10;
+                              auswahlen.add(falsch);
+                              fragen_Count = fragen_Count + 1;
+                              break;
+                            case 3:
+                              plus = plus - 10;
+                              auswahlen.add(falsch);
+                              fragen_Count = fragen_Count + 1;
+                              break;
+                            case 4:
+                              plus = plus + 10;
+                              auswahlen.add(richtig); fragen_Count = fragen_Count + 1;
+                              break;
 
-                              }
-
-
-                            }
-                            );
-
-                          },
+                          }}
+                        });
+                      },
                           child: Icon(Icons.thumb_up, size: 50.0),
                         ),
                     ),
@@ -232,4 +261,11 @@ List<String> fragen=[
   }
 
 }
-
+ void message(int plus){
+  if(plus==0)
+    print('du bist gleich 0');
+  else if(plus<0)
+    print('du hast verloren ');
+  else
+    print('du hast gewonne');
+}
