@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fragen/Frag_Test.dart';
+import 'package:fragen/plus.dart';
 
 import 'constans.dart';
 
@@ -96,18 +98,12 @@ class SoruSayfasi extends StatefulWidget {
 
 class _SoruSayfasiState extends State<SoruSayfasi> {
 
-int plus=0;
-int fragen_Count=0;
-List<Widget> auswahlen=[];
-List<String> fragen=[
-  'Berlin ist Hauptstadt von Deutscland',
-  'Deutschland hat 10 Bundesland',
-  'Die deutsche Nationalmannschaft  hat das letzte Turnier gewonnen',
-  'Mercedes ist eine italienische Marke ',
-  'Die Turken leben auch in Koln',
-  ''
-];
 
+
+List<Widget> auswahlen=[];
+
+Data data=Data();
+Plus pl=Plus();
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +117,7 @@ List<String> fragen=[
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                fragen[fragen_Count],
+                data.getFragtArtikel(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20.0,
@@ -151,7 +147,7 @@ List<String> fragen=[
                         children: [
                           Expanded(child: Center(child: Text('Ergebnis',
                             style: TextStyle(color:Colors.white,fontSize: 10),))),
-                          Expanded(child: Text(plus.toString(),
+                          Expanded(child: Text(pl.plus.toString(),
                             style: TextStyle(color:Colors.black,fontSize: 20),))
                         ],
                       ),
@@ -170,38 +166,20 @@ List<String> fragen=[
                         padding: EdgeInsets.all(3),
                         child: ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              if(fragen_Count<=4){
-                              switch (fragen_Count) {
-                                case 0:
-                                  plus = plus - 10;
-                                  auswahlen.add(falsch);
-                                  fragen_Count = fragen_Count + 1;
-                                  break;
-                                case 1:
-                                  plus = plus + 10;
-                                  auswahlen.add(richtig);
-                                  fragen_Count = fragen_Count + 1;
-                                  break;
-                                case 2:
-                                  plus = plus + 10;
-                                  auswahlen.add(richtig);
-                                  fragen_Count = fragen_Count + 1;
-                                  break;
-                                case 3:
-                                  plus = plus + 10;
-                                  auswahlen.add(richtig);
-                                  fragen_Count = fragen_Count + 1;
-                                  break;
-                                case 4:
-                                  plus = plus - 10;
-                                  auswahlen.add(falsch); fragen_Count = fragen_Count + 1;
-                                  break;
+                            if(data.fragen_Count+2<data.dieFragen.length){setState(() {
 
-                              }
-                              }
-                              
-                            });
+                                if(data.getAntwortbool()==false)
+                                {auswahlen.add(richtig);
+                                pl.plus= pl.zuNehmen();
+                                }
+                                else{auswahlen.add(falsch);
+                                pl.plus=pl.abNehmen();}
+
+                                data.nachsteFrage(pl.plus);
+
+
+                            });}
+
                           },
                           child: Icon(Icons.thumb_down,color: Colors.red,
                             size: 50.0,
@@ -214,38 +192,21 @@ List<String> fragen=[
 
                         child: ElevatedButton(
 
-                          onPressed:  (){
-                            setState(() {
-                              if(fragen_Count<=4){
-                          switch (fragen_Count) {
-                            case 0:
-                              plus = plus + 10;
-                              auswahlen.add(richtig);
-                              fragen_Count = fragen_Count + 1;
-                              break;
-                              break;
-                            case 1:
-                              plus = plus - 10;
-                              auswahlen.add(falsch);
-                              fragen_Count = fragen_Count + 1;
-                              break;
-                            case 2:
-                              plus = plus - 10;
-                              auswahlen.add(falsch);
-                              fragen_Count = fragen_Count + 1;
-                              break;
-                            case 3:
-                              plus = plus - 10;
-                              auswahlen.add(falsch);
-                              fragen_Count = fragen_Count + 1;
-                              break;
-                            case 4:
-                              plus = plus + 10;
-                              auswahlen.add(richtig); fragen_Count = fragen_Count + 1;
-                              break;
+                          onPressed: (){
+                            if(data.fragen_Count+2<data.dieFragen.length){ setState(() {
 
-                          }}
-                        });
+                                if(data.getAntwortbool()==true)
+                                {auswahlen.add(richtig);
+                                pl.plus= pl.zuNehmen();
+                                }
+                                else{auswahlen.add(falsch);
+                                pl.plus= pl.abNehmen();
+                                }
+
+                                data.nachsteFrage(pl.plus);}
+
+                            );}
+
                       },
                           child: Icon(Icons.thumb_up, size: 50.0),
                         ),
@@ -261,11 +222,4 @@ List<String> fragen=[
   }
 
 }
- void message(int plus){
-  if(plus==0)
-    print('du bist gleich 0');
-  else if(plus<0)
-    print('du hast verloren ');
-  else
-    print('du hast gewonne');
-}
+
