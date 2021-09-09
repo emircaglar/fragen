@@ -112,12 +112,13 @@ Plus pl=Plus();
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Expanded(
-          flex: 4,
+          flex: 2,
           child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                data.getFragtArtikel(),
+                data.getFragtArtikel(pl.plus),
+
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20.0,
@@ -127,6 +128,11 @@ Plus pl=Plus();
             ),
           ),
         ),
+        Expanded(
+            flex: 3,
+            child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(child: data.getimage(pl.plus)))),
         Expanded(
             flex: 1,
             child: Row(
@@ -165,8 +171,10 @@ Plus pl=Plus();
                     child: Padding(
                         padding: EdgeInsets.all(3),
                         child: ElevatedButton(
+
                           onPressed: () {
-                            if(data.fragen_Count+2<data.dieFragen.length){setState(() {
+
+                            if(data.fragen_Count+3<data.dieFragen.length){setState(() {
 
                                 if(data.getAntwortbool()==false)
                                 {auswahlen.add(richtig);
@@ -175,7 +183,7 @@ Plus pl=Plus();
                                 else{auswahlen.add(falsch);
                                 pl.plus=pl.abNehmen();}
 
-                                data.nachsteFrage(pl.plus);
+                                data.nachsteFrage();
 
 
                             });}
@@ -185,7 +193,9 @@ Plus pl=Plus();
                             size: 50.0,
                           ),
 
-                        ))),
+                        ),
+    ),
+    ),
                 Expanded(
                     child: Padding(
                         padding: EdgeInsets.all(3),
@@ -193,7 +203,8 @@ Plus pl=Plus();
                         child: ElevatedButton(
 
                           onPressed: (){
-                            if(data.fragen_Count+2<data.dieFragen.length){ setState(() {
+
+                            if(data.fragen_Count+3<data.dieFragen.length){ setState(() {
 
                                 if(data.getAntwortbool()==true)
                                 {auswahlen.add(richtig);
@@ -203,7 +214,7 @@ Plus pl=Plus();
                                 pl.plus= pl.abNehmen();
                                 }
 
-                                data.nachsteFrage(pl.plus);}
+                                data.nachsteFrage();}
 
                             );}
 
